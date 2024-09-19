@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire Era - Team Registration</title>
+    <link rel="stylesheet" href="br.css">
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>BR Team Registration</h1>
+        <p>Register your team of four players for the tournament!</p>
+
+        <form id="team-registration-form" class="tournament-form">
+            <div class="form-group">
+                <label for="phone">Phone Number (Team Leader):</label>
+                <input type="tel" id="phone" placeholder="Enter phone number" required>
+            </div>
+
+            <!-- Player 1 -->
+            <div class="player-details">
+                <h2>Player 1</h2>
+                <div class="form-group">
+                    <label for="player1-name">Name:</label>
+                    <input type="text" id="player1-name" placeholder="Enter player 1 name" required>
+                </div>
+                <div class="form-group">
+                    <label for="player1-id">Game ID:</label>
+                    <input type="text" id="player1-id" placeholder="Enter player 1 game ID" required>
+                </div>
+            </div>
+
+            <!-- Player 2 -->
+            <div class="player-details">
+                <h2>Player 2</h2>
+                <div class="form-group">
+                    <label for="player2-name">Name:</label>
+                    <input type="text" id="player2-name" placeholder="Enter player 2 name" required>
+                </div>
+                <div class="form-group">
+                    <label for="player2-id">Game ID:</label>
+                    <input type="text" id="player2-id" placeholder="Enter player 2 game ID" required>
+                </div>
+            </div>
+
+            <!-- Player 3 -->
+            <div class="player-details">
+                <h2>Player 3</h2>
+                <div class="form-group">
+                    <label for="player3-name">Name:</label>
+                    <input type="text" id="player3-name" placeholder="Enter player 3 name" required>
+                </div>
+                <div class="form-group">
+                    <label for="player3-id">Game ID:</label>
+                    <input type="text" id="player3-id" placeholder="Enter player 3 game ID" required>
+                </div>
+            </div>
+
+            <!-- Player 4 -->
+            <div class="player-details">
+                <h2>Player 4</h2>
+                <div class="form-group">
+                    <label for="player4-name">Name:</label>
+                    <input type="text" id="player4-name" placeholder="Enter player 4 name" required>
+                </div>
+                <div class="form-group">
+                    <label for="player4-id">Game ID:</label>
+                    <input type="text" id="player4-id" placeholder="Enter player 4 game ID" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Register Team">
+            </div>
+        </form>
+
+
+        <div id="success-message" style="display: none; color: green;">
+            Team successfully registered!
+          </div>
+          
+          <!-- Error Message -->
+          <div id="error-message" style="display: none; color: red;">
+            An error occurred while registering the team. Please try again.
+          </div>
+    </div>
+    
+    <script type="module">
+        // Import the functions you need from the Firebase SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+        import { getDatabase, ref, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyApdkWT_NHIlYwUf0grGtwHRCmDZYj16jY",
+          authDomain: "fireera-ee0bb.firebaseapp.com",
+          databaseURL: "https://fireera-ee0bb-default-rtdb.firebaseio.com",
+          projectId: "fireera-ee0bb",
+          storageBucket: "fireera-ee0bb.appspot.com",
+          messagingSenderId: "745929991202",
+          appId: "1:745929991202:web:00e69b7341aa8503c4167b",
+          measurementId: "G-PK5BFLCKK7"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+      
+        // Form submission handler
+        const form = document.getElementById('team-registration-form');
+        const successMessage = document.getElementById('success-message');
+        const errorMessage = document.getElementById('error-message');
+      
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+      
+          // Hide success and error messages on new submission
+          successMessage.style.display = 'none';
+          errorMessage.style.display = 'none';
+      
+          const phone = document.getElementById('phone').value;
+          const player1Name = document.getElementById('player1-name').value;
+          const player1Id = document.getElementById('player1-id').value;
+          const player2Name = document.getElementById('player2-name').value;
+          const player2Id = document.getElementById('player2-id').value;
+          const player3Name = document.getElementById('player3-name').value;
+          const player3Id = document.getElementById('player3-id').value;
+          const player4Name = document.getElementById('player4-name').value;
+          const player4Id = document.getElementById('player4-id').value;
+      
+          try {
+            // Add a new entry to the Realtime Database
+            await push(ref(db, 'brTeamRegistrations'), {
+              phone: phone,
+              players: [
+                { name: player1Name, gameId: player1Id },
+                { name: player2Name, gameId: player2Id },
+                { name: player3Name, gameId: player3Id },
+                { name: player4Name, gameId: player4Id }
+              ],
+              timestamp: serverTimestamp()
+            });
+      
+            // Show success message and reset form
+            successMessage.style.display = 'block';
+            form.reset(); // Clear the form
+          } catch (error) {
+            console.error('Error registering team: ', error);
+            errorMessage.textContent = 'An error occurred while registering the team. Please try again.';
+            errorMessage.style.display = 'block';
+          }
+        });
+      </script>
+      
+      
+      
+</body>
+
+</html>
