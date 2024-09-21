@@ -82,13 +82,42 @@
       
           <!-- Online Payment Section (Hidden by default) -->
           <div id="online-payment-section" style="display: none; padding: 20px;">
-            <p>Please pay ₹200 and scan the QR code below:</p>
-            <img src="./assets/scanner.jpg" alt="QR Code for Payment" style="width:200px;height:200px;"><br>
-                <label for="transaction-id" style="color: aliceblue;">Transaction ID:</label>
-                <input type="text" id="transaction-id" placeholder="Enter transaction ID" required><br><br>
-                <label for="payment-image" style="color: aliceblue;">Upload Payment Proof:</label>
-                <input type="file" id="payment-image" accept="image/*" required>
-          </div>
+    <p>
+        Each player has to pay ₹50. Each team consists of 4 members, so the total amount is ₹200.
+    </p>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <tr>
+            <th style="border: 1px solid #ccc; padding: 10px; text-align: left;">Player</th>
+            <th style="border: 1px solid #ccc; padding: 10px; text-align: left;">Amount (₹)</th>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #ccc; padding: 10px;">Player 1</td>
+            <td style="border: 1px solid #ccc; padding: 10px;">50</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #ccc; padding: 10px;">Player 2</td>
+            <td style="border: 1px solid #ccc; padding: 10px;">50</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #ccc; padding: 10px;">Player 3</td>
+            <td style="border: 1px solid #ccc; padding: 10px;">50</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #ccc; padding: 10px;">Player 4</td>
+            <td style="border: 1px solid #ccc; padding: 10px;">50</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #ccc; padding: 10px; font-weight: bold;">Total</td>
+            <td style="border: 1px solid #ccc; padding: 10px; font-weight: bold;">200</td>
+        </tr>
+    </table>
+    <img src="./assets/scanner.jpg" alt="QR Code for Payment" style="width:200px;height:200px; margin-top: 10px;"><br>
+    <label for="transaction-id" style="color: aliceblue;">Transaction ID:</label>
+    <input type="text" id="transaction-id" placeholder="Enter transaction ID" required><br><br>
+    <label for="payment-image" style="color: aliceblue;">Upload Payment Proof:</label>
+    <input type="file" id="payment-image" accept="image/*" required>
+</div>
+
       
           <!-- Disclaimer for Offline Payment -->
           <div id="offline-disclaimer" style="display: none; color: red; padding: 20px;">
@@ -222,7 +251,7 @@
       
           try {
             // Add a new entry to the Realtime Database
-            await push(ref(db, 'brTeamRegistrations'), {
+            await push(ref(db, 'csTeamRegistrations'), {
               phone: phone,
               players: [
                 { name: player1Name, gameId: player1Id },
