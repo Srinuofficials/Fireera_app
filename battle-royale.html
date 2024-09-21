@@ -204,82 +204,85 @@
         });
       
         form.addEventListener('submit', async function (e) {
-          e.preventDefault();
-            
-const loadingSpinner = document.getElementById('loading-spinner');
-                loadingSpinner.style.display = 'flex';
-      
-          // Hide success and error messages on new submission
-          successMessage.style.display = 'none';
-          errorMessage.style.display = 'none';
-      
-          // Get team data
-          const phone = document.getElementById('phone').value;
-          const player1Name = document.getElementById('player1-name').value;
-          const player1Id = document.getElementById('player1-id').value;
-          const player2Name = document.getElementById('player2-name').value;
-          const player2Id = document.getElementById('player2-id').value;
-          const player3Name = document.getElementById('player3-name').value;
-          const player3Id = document.getElementById('player3-id').value;
-          const player4Name = document.getElementById('player4-name').value;
-          const player4Id = document.getElementById('player4-id').value;
-      
-          const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
-          let transactionId = null;
-          let paymentImageURL = null;
-      
-          if (paymentMethod === 'online') {
-            transactionId = document.getElementById('transaction-id').value;
-      
-            // Handle payment proof image upload
-            const paymentImage = document.getElementById('payment-image').files[0];
-            if (paymentImage) {
-              const storageReference = storageRef(storage, `paymentProofs/${paymentImage.name}`);
-      
-              try {
+    e.preventDefault();
+    
+    const loadingSpinner = document.getElementById('loading-spinner');
+    loadingSpinner.style.display = 'flex';  // Show the spinner when form is submitted
+
+    // Hide success and error messages on new submission
+    successMessage.style.display = 'none';
+    errorMessage.style.display = 'none';
+
+    // Get team data
+    const phone = document.getElementById('phone').value;
+    const player1Name = document.getElementById('player1-name').value;
+    const player1Id = document.getElementById('player1-id').value;
+    const player2Name = document.getElementById('player2-name').value;
+    const player2Id = document.getElementById('player2-id').value;
+    const player3Name = document.getElementById('player3-name').value;
+    const player3Id = document.getElementById('player3-id').value;
+    const player4Name = document.getElementById('player4-name').value;
+    const player4Id = document.getElementById('player4-id').value;
+
+    const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+    let transactionId = null;
+    let paymentImageURL = null;
+
+    if (paymentMethod === 'online') {
+        // Handle online payment details
+        transactionId = document.getElementById('transaction-id').value;
+
+        // Handle payment proof image upload
+        const paymentImage = document.getElementById('payment-image').files[0];
+        if (paymentImage) {
+            const storageReference = storageRef(storage, `paymentProofs/${paymentImage.name}`);
+
+            try {
                 // Upload the file to Firebase Storage
                 const snapshot = await uploadBytes(storageReference, paymentImage);
                 paymentImageURL = await getDownloadURL(snapshot.ref);  // Get the download URL of the uploaded image
-              } catch (error) {
+            } catch (error) {
                 console.error('Error uploading payment image: ', error);
                 errorMessage.textContent = 'Error uploading payment proof. Please try again.';
                 errorMessage.style.display = 'block';
+                loadingSpinner.style.display = 'none';
                 return; // Stop further execution if image upload fails
-              }
             }
-          }
-      
-          try {
-            // Add a new entry to the Realtime Database
-            await push(ref(db, 'brTeamRegistrations'), {
-              phone: phone,
-              players: [
+        }
+    }
+
+    try {
+        // Add a new entry to the Realtime Database
+        await push(ref(db, 'brTeamRegistrations'), {
+            phone: phone,
+            players: [
                 { name: player1Name, gameId: player1Id },
                 { name: player2Name, gameId: player2Id },
                 { name: player3Name, gameId: player3Id },
                 { name: player4Name, gameId: player4Id }
-              ],
-              payment: {
+            ],
+            payment: {
                 method: paymentMethod,
-                transactionId: transactionId || "offline",
-                amount: paymentMethod === 'online' ? 200 : 0,
-                paymentImageURL: paymentImageURL || null  // Store the image URL
-              },
-              timestamp: serverTimestamp()
-            });
-      
-            // Show success message and reset form
-            successMessage.style.display = 'block';
-            form.reset(); // Clear the form
-          } catch (error) {
-            console.error('Error registering team: ', error);
-            errorMessage.textContent = 'An error occurred while registering the team. Please try again.';
-            errorMessage.style.display = 'block';
-          }finally {
+                transactionId: transactionId || "offline",  // "offline" if no transaction ID for offline payments
+                amount: paymentMethod === 'online' ? 200 : 0,  // Only charge if paying online
+                paymentImageURL: paymentImageURL || null  // Store the image URL for online payments
+            },
+            timestamp: serverTimestamp()
+        });
+
+        // Show success message and reset form
+        successMessage.style.display = 'block';
+        form.reset(); // Clear the form
+    } catch (error) {
+        console.error('Error registering team: ', error);
+        errorMessage.textContent = 'An error occurred while registering the team. Please try again.';
+        errorMessage.style.display = 'block';
+    } finally {
         // Hide the spinner after submission attempt
         loadingSpinner.style.display = 'none';
     }
-        });
+});
+
       </script>
       <div id="loading-spinner" class="loading-spinner" style="display: none;">
     <div class="spinner"></div>
