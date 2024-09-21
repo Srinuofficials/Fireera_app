@@ -111,7 +111,6 @@
             <td style="border: 1px solid #ccc; padding: 10px; font-weight: bold;">200</td>
         </tr>
     </table>
-
     <img src="./assets/scanner.jpg" alt="QR Code for Payment" style="width:200px;height:200px; margin-top: 10px;"><br>
     <label for="transaction-id" style="color: aliceblue;">Transaction ID:</label>
     <input type="text" id="transaction-id" placeholder="Enter transaction ID" required><br><br>
@@ -209,6 +208,9 @@
       
         form.addEventListener('submit', async function (e) {
           e.preventDefault();
+            
+const loadingSpinner = document.getElementById('loading-spinner');
+                loadingSpinner.style.display = 'flex';
       
           // Hide success and error messages on new submission
           successMessage.style.display = 'none';
@@ -276,10 +278,15 @@
             console.error('Error registering team: ', error);
             errorMessage.textContent = 'An error occurred while registering the team. Please try again.';
             errorMessage.style.display = 'block';
-          }
+          }finally {
+        // Hide the spinner after submission attempt
+        loadingSpinner.style.display = 'none';
+    }
         });
       </script>
-      
+      <div id="loading-spinner" class="loading-spinner" style="display: none;">
+    <div class="spinner"></div>
+</div>
       
       
       
