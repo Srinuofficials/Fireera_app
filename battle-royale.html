@@ -12,85 +12,134 @@
     <div class="form-container">
         <h1>BR Team Registration</h1>
         <p>Register your team of four players for the tournament!</p>
-
+      
         <form id="team-registration-form" class="tournament-form">
+          <div class="form-group">
+            <label for="phone">Phone Number (Team Leader):</label>
+            <input type="tel" id="phone" placeholder="Enter phone number" required>
+          </div>
+      
+          <!-- Player 1 -->
+          <div class="player-details">
+            <h2>Player 1</h2>
             <div class="form-group">
-                <label for="phone">Phone Number (Team Leader):</label>
-                <input type="tel" id="phone" placeholder="Enter phone number" required>
+              <label for="player1-name">Name:</label>
+              <input type="text" id="player1-name" placeholder="Enter player 1 name" required>
             </div>
-
-            <!-- Player 1 -->
-            <div class="player-details">
-                <h2>Player 1</h2>
-                <div class="form-group">
-                    <label for="player1-name">Name:</label>
-                    <input type="text" id="player1-name" placeholder="Enter player 1 name" required>
-                </div>
-                <div class="form-group">
-                    <label for="player1-id">Game ID:</label>
-                    <input type="text" id="player1-id" placeholder="Enter player 1 game ID" required>
-                </div>
-            </div>
-
-            <!-- Player 2 -->
-            <div class="player-details">
-                <h2>Player 2</h2>
-                <div class="form-group">
-                    <label for="player2-name">Name:</label>
-                    <input type="text" id="player2-name" placeholder="Enter player 2 name" required>
-                </div>
-                <div class="form-group">
-                    <label for="player2-id">Game ID:</label>
-                    <input type="text" id="player2-id" placeholder="Enter player 2 game ID" required>
-                </div>
-            </div>
-
-            <!-- Player 3 -->
-            <div class="player-details">
-                <h2>Player 3</h2>
-                <div class="form-group">
-                    <label for="player3-name">Name:</label>
-                    <input type="text" id="player3-name" placeholder="Enter player 3 name" required>
-                </div>
-                <div class="form-group">
-                    <label for="player3-id">Game ID:</label>
-                    <input type="text" id="player3-id" placeholder="Enter player 3 game ID" required>
-                </div>
-            </div>
-
-            <!-- Player 4 -->
-            <div class="player-details">
-                <h2>Player 4</h2>
-                <div class="form-group">
-                    <label for="player4-name">Name:</label>
-                    <input type="text" id="player4-name" placeholder="Enter player 4 name" required>
-                </div>
-                <div class="form-group">
-                    <label for="player4-id">Game ID:</label>
-                    <input type="text" id="player4-id" placeholder="Enter player 4 game ID" required>
-                </div>
-            </div>
-
             <div class="form-group">
-                <input type="submit" value="Register Team">
+              <label for="player1-id">Game ID:</label>
+              <input type="text" id="player1-id" placeholder="Enter player 1 game ID" required>
             </div>
+          </div>
+      
+          <!-- Player 2 -->
+          <div class="player-details">
+            <h2>Player 2</h2>
+            <div class="form-group">
+              <label for="player2-name">Name:</label>
+              <input type="text" id="player2-name" placeholder="Enter player 2 name" required>
+            </div>
+            <div class="form-group">
+              <label for="player2-id">Game ID:</label>
+              <input type="text" id="player2-id" placeholder="Enter player 2 game ID" required>
+            </div>
+          </div>
+      
+          <!-- Player 3 -->
+          <div class="player-details">
+            <h2>Player 3</h2>
+            <div class="form-group">
+              <label for="player3-name">Name:</label>
+              <input type="text" id="player3-name" placeholder="Enter player 3 name" required>
+            </div>
+            <div class="form-group">
+              <label for="player3-id">Game ID:</label>
+              <input type="text" id="player3-id" placeholder="Enter player 3 game ID" required>
+            </div>
+          </div>
+      
+          <!-- Player 4 -->
+          <div class="player-details">
+            <h2>Player 4</h2>
+            <div class="form-group">
+              <label for="player4-name">Name:</label>
+              <input type="text" id="player4-name" placeholder="Enter player 4 name" required>
+            </div>
+            <div class="form-group">
+              <label for="player4-id">Game ID:</label>
+              <input type="text" id="player4-id" placeholder="Enter player 4 game ID" required>
+            </div>
+          </div>
+      
+          <!-- Payment Option -->
+          <div class="form-group">
+            <label>Payment Method:</label><br>
+            <input type="radio" id="pay-online" name="payment-method" value="online" required>
+            <label for="pay-online">Pay Online</label>
+            <input type="radio" id="pay-offline" name="payment-method" value="offline" required>
+            <label for="pay-offline">Pay Offline</label>
+          </div>
+      
+          <!-- Online Payment Section (Hidden by default) -->
+          <div id="online-payment-section" style="display: none; padding: 20px;">
+            <p>Please pay ₹200 and scan the QR code below:</p>
+            <img src="./assets/scanner.jpg" alt="QR Code for Payment" style="width:200px;height:200px;"><br>
+                <label for="transaction-id" style="color: aliceblue;">Transaction ID:</label>
+                <input type="text" id="transaction-id" placeholder="Enter transaction ID" required><br><br>
+                <label for="payment-image" style="color: aliceblue;">Upload Payment Proof:</label>
+                <input type="file" id="payment-image" accept="image/*" required>
+          </div>
+      
+          <!-- Disclaimer for Offline Payment -->
+          <div id="offline-disclaimer" style="display: none; color: red; padding: 20px;">
+            Disclaimer: You will only be allowed to play after we receive your offline payment.
+          </div>
+      
+          <div class="form-group">
+            <input type="submit" value="Register Team">
+          </div>
         </form>
-
-
+      
+        <!-- Success and Error Messages -->
         <div id="success-message" style="display: none; color: green;">
-            Team successfully registered!
-          </div>
-          
-          <!-- Error Message -->
-          <div id="error-message" style="display: none; color: red;">
-            An error occurred while registering the team. Please try again.
-          </div>
-    </div>
+          Team successfully registered!
+        </div>
+        <div id="error-message" style="display: none; color: red;">
+          An error occurred while registering the team. Please try again.
+        </div>
+      </div>
+      
+      <script type="module">
+        // Add event listeners to toggle between online and offline payment sections
+        const onlineRadio = document.getElementById('pay-online');
+        const offlineRadio = document.getElementById('pay-offline');
+        const onlinePaymentSection = document.getElementById('online-payment-section');
+        const offlineDisclaimer = document.getElementById('offline-disclaimer');
+      
+        onlineRadio.addEventListener('change', function () {
+          if (onlineRadio.checked) {
+            onlinePaymentSection.style.display = 'block';
+            offlineDisclaimer.style.display = 'none';
+          }
+        });
+      
+        offlineRadio.addEventListener('change', function () {
+          if (offlineRadio.checked) {
+            onlinePaymentSection.style.display = 'none';
+            offlineDisclaimer.style.display = 'block';
+          }
+        });
+      
+        // Firebase submission logic can be added below
+        // (similar to what you had, just ensure the payment method is handled correctly)
+      </script>
+      
     
-    <script type="module">
+      <script type="module">
         // Import the functions you need from the Firebase SDKs
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
         import { getDatabase, ref, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-storage.js";
       
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -107,11 +156,26 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
+        const storage = getStorage(app);  // Initialize Firebase Storage
       
         // Form submission handler
         const form = document.getElementById('team-registration-form');
         const successMessage = document.getElementById('success-message');
         const errorMessage = document.getElementById('error-message');
+      
+        // Show or hide payment fields based on payment method selection
+        const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
+        const onlinePaymentFields = document.getElementById('online-payment-fields');
+      
+        paymentMethodRadios.forEach(radio => {
+          radio.addEventListener('change', function () {
+            if (this.value === 'online') {
+              onlinePaymentFields.style.display = 'block';
+            } else {
+              onlinePaymentFields.style.display = 'none';
+            }
+          });
+        });
       
         form.addEventListener('submit', async function (e) {
           e.preventDefault();
@@ -120,6 +184,7 @@
           successMessage.style.display = 'none';
           errorMessage.style.display = 'none';
       
+          // Get team data
           const phone = document.getElementById('phone').value;
           const player1Name = document.getElementById('player1-name').value;
           const player1Id = document.getElementById('player1-id').value;
@@ -129,6 +194,31 @@
           const player3Id = document.getElementById('player3-id').value;
           const player4Name = document.getElementById('player4-name').value;
           const player4Id = document.getElementById('player4-id').value;
+      
+          const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+          let transactionId = null;
+          let paymentImageURL = null;
+      
+          if (paymentMethod === 'online') {
+            transactionId = document.getElementById('transaction-id').value;
+      
+            // Handle payment proof image upload
+            const paymentImage = document.getElementById('payment-image').files[0];
+            if (paymentImage) {
+              const storageReference = storageRef(storage, `paymentProofs/${paymentImage.name}`);
+      
+              try {
+                // Upload the file to Firebase Storage
+                const snapshot = await uploadBytes(storageReference, paymentImage);
+                paymentImageURL = await getDownloadURL(snapshot.ref);  // Get the download URL of the uploaded image
+              } catch (error) {
+                console.error('Error uploading payment image: ', error);
+                errorMessage.textContent = 'Error uploading payment proof. Please try again.';
+                errorMessage.style.display = 'block';
+                return; // Stop further execution if image upload fails
+              }
+            }
+          }
       
           try {
             // Add a new entry to the Realtime Database
@@ -140,6 +230,12 @@
                 { name: player3Name, gameId: player3Id },
                 { name: player4Name, gameId: player4Id }
               ],
+              payment: {
+                method: paymentMethod,
+                transactionId: transactionId || "offline",
+                amount: paymentMethod === 'online' ? 200 : 0,
+                paymentImageURL: paymentImageURL || null  // Store the image URL
+              },
               timestamp: serverTimestamp()
             });
       
@@ -153,6 +249,7 @@
           }
         });
       </script>
+      
       
       
       
